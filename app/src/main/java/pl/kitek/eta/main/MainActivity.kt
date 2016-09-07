@@ -30,12 +30,10 @@ class MainActivity : WearableActivity(), WearableListView.ClickListener {
 
     override fun onEnterAmbient(ambientDetails: Bundle?) {
         super.onEnterAmbient(ambientDetails)
-
     }
 
     override fun onExitAmbient() {
         super.onExitAmbient()
-        
     }
 
 }

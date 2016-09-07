@@ -34,18 +34,19 @@ class WearableListItemLayout @JvmOverloads constructor(
 
     override fun onNonCenterPosition(animate: Boolean) {
         nameView?.alpha = fadedTextAlpha
-
         circleView?.let {
-            it.drawable?.alpha = 128
-            it.animate().scaleX(0.6f).scaleY(0.6f).duration = 100
+            if (animate) {
+                it.animate().scaleX(0.6f).scaleY(0.6f).alpha(0.5f).duration = 250
+            }
         }
     }
 
     override fun onCenterPosition(animate: Boolean) {
         nameView?.alpha = 1f
-        circleView?.let {
-            it.drawable?.alpha = 256
-            it.animate().scaleX(1.0f).scaleY(1.0f).duration = 100
+        if (animate) {
+            circleView?.let {
+                it.animate().scaleX(1.0f).scaleY(1.0f).alpha(1f).duration = 250
+            }
         }
     }
 

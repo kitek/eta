@@ -20,7 +20,11 @@ class MainAdapter() : WearableListView.Adapter() {
         items.add(ListItemNew())
         items.add(Eta(
                 Location("Urocza 15 Elbląg", 54.1698451f, 19.4034976f),
-                Location("Olivia Business Centre", 54.4029028f, 18.5696496f)
+                Location("Schibsted Gdańsk", 54.4029028f, 18.5696496f)
+        ))
+        items.add(Eta(
+                Location("Schibsted Gdańsk", 0f, 0f),
+                Location("Schibsted Kraków", 0f, 0f)
         ))
     }
 
@@ -41,7 +45,7 @@ class MainAdapter() : WearableListView.Adapter() {
             itemView.nameView.text = getName()
             val drawable = when (this) {
                 is ListItemNew -> R.drawable.ic_add_circle_blue_24dp
-                else -> R.drawable.ic_repeat_24dp
+                else -> R.drawable.ic_history
             }
             itemView.circleView.setImageResource(drawable)
         }
