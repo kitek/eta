@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ETA</string>
+    <string name="new_eta">Nowa ETA</string>
+    <string name="start_location">Lokalizacja startowa</string>
+    <string name="end_location">Lokalizacja docelowa</string>
+    <string name="error">Coś poszło nie tak?</string>
+    <string name="is_correct">Poprawnie?</string>
+</resources>

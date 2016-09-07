@@ -1,4 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">ETA</string>
     <string name="new_eta">New ETA</string>
+    <string name="start_location">Your start location</string>
+    <string name="end_location">Your destination</string>
+    <string name="error">Something went wrong?</string>
+    <string name="is_correct">Is this correct?</string>
 </resources>

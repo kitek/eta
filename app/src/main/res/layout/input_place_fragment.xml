@@ -8,15 +8,6 @@
     android:padding="15dp"
     tools:ignore="RtlHardcoded,ContentDescription">
 
-    <!--<FrameLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:padding="5dp"-->
-        <!--app:layout_box="all">-->
-
-    <!--</FrameLayout>-->
-
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -31,28 +22,36 @@
             android:textColor="@color/black"
             android:textSize="18sp"
             tools:text="It's correct?\nAdress one two"/>
-
-        <!-- android.support.wearable.view.CircularButton -->
-
-        <ImageView
+        
+        <android.support.wearable.view.DelayedConfirmationView
             android:id="@+id/confirmBtn"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
             android:layout_gravity="bottom|left"
             android:clickable="true"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_check"/>
+            android:src="@drawable/ic_check"
+            app:circle_border_color="@color/circle_border_color"
+            app:circle_border_width="6dp"
+            app:circle_color="@color/blue"
+            app:circle_padding="0dp"
+            app:circle_radius="32dp"
+            app:circle_radius_pressed="32dp"/>
 
-        <ImageView
+
+        <android.support.wearable.view.DelayedConfirmationView
             android:id="@+id/cancelBtn"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
             android:layout_gravity="bottom|right"
             android:clickable="true"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_cancel"/>
+            android:src="@drawable/ic_loop"
+            app:circle_border_color="@color/circle_cancel_border"
+            app:circle_border_width="6dp"
+            app:circle_color="@color/circle_cancel_background"
+            app:circle_padding="0dp"
+            app:circle_radius="32dp"
+            app:circle_radius_pressed="32dp"/>
 
     </FrameLayout>
-
 
 </android.support.wearable.view.BoxInsetLayout>

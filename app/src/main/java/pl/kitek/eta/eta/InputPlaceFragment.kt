@@ -5,6 +5,7 @@ import android.app.Fragment
 import android.content.Intent
 import android.os.Bundle
 import android.speech.RecognizerIntent
+import android.support.wearable.view.DelayedConfirmationView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,12 +14,12 @@ import pl.kitek.eta.R
 import pl.kitek.eta.common.data.model.Eta
 import pl.kitek.eta.common.data.model.Location
 import pl.kitek.eta.common.inflate
-import timber.log.Timber
 
-class InputPlaceFragment : Fragment(), View.OnClickListener {
+class InputPlaceFragment : Fragment(), DelayedConfirmationView.DelayedConfirmationListener {
 
     companion object {
-        const val KEY_ETA = "deal"
+        const val DECISION_TIMEOUT = 5000L // 5 sek
+        const val KEY_ETA = "eta"
         const val SPEECH_REQUEST_CODE = 0
 
         fun newInstance(eta: Eta): InputPlaceFragment {
@@ -49,8 +50,11 @@ class InputPlaceFragment : Fragment(), View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
         displaySpeechRecognizer()
 
-        confirmBtn.setOnClickListener(this)
-        cancelBtn.setOnClickListener(this)
+        confirmBtn.setListener(this)
+        confirmBtn.setTotalTimeMs(DECISION_TIMEOUT)
+
+        cancelBtn.setListener(this)
+        cancelBtn.setTotalTimeMs(DECISION_TIMEOUT)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -62,44 +66,62 @@ class InputPlaceFragment : Fragment(), View.OnClickListener {
                     speechText = results[0]
                     showConfirmation(results[0])
                 } else {
-                    showError("Something went wrong?")
+                    showError(getString(R.string.error))
                 }
             }
         } else {
-            showError("Something went wrong?")
-
-            Timber.d("ka boom!")
+            showError(getString(R.string.error))
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
 
     private fun displaySpeechRecognizer() {
+        if (!isAdded) return
+
         val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
-        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, if (isStartPlace) "Your start location" else "Your destination")
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, if (isStartPlace)
+            getString(R.string.start_location) else getString(R.string.end_location)
+        )
         startActivityForResult(intent, SPEECH_REQUEST_CODE)
     }
 
     private fun showError(message: String) {
         confirmTextView.text = message
+        cancelBtn.start()
     }
 
     private fun showConfirmation(spokenText: String) {
-        confirmTextView.text = "Is this correct?\n$spokenText"
+        confirmTextView.text = getString(R.string.is_correct) + "\n" + spokenText
+        confirmBtn.start()
     }
 
-    override fun onClick(view: View?) {
-        val id = view?.id
-        if (id == R.id.cancelBtn) {
-            displaySpeechRecognizer()
-        } else if (id == R.id.confirmBtn) {
-            if (isStartPlace) {
-                eta = Eta(Location(speechText!!, 0.0f, 0.0f), null)
-            } else {
-                eta!!.updateDestination(Location(speechText!!, 0f, 0f))
+    private fun onButtonClicked(id: Int) {
+        when (id) {
+            R.id.cancelBtn -> displaySpeechRecognizer()
+            R.id.confirmBtn -> {
+                speechText?.let {
+                    if (isStartPlace) {
+                        eta = Eta(Location(it, 0.0f, 0.0f), null)
+                    } else {
+                        eta!!.updateDestination(Location(it, 0f, 0f))
+                    }
+                    (activity as EtaActivity).goNext(eta!!)
+                }
             }
-            (activity as EtaActivity).goNext(eta!!)
-
         }
     }
+
+    override fun onTimerSelected(v: View?) {
+        v?.let {
+            onButtonClicked(it.id)
+        }
+    }
+
+    override fun onTimerFinished(v: View?) {
+        v?.let {
+            onButtonClicked(it.id)
+        }
+    }
+
 }
