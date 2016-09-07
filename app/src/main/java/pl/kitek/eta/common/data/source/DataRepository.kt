@@ -13,7 +13,7 @@ class DataRepository {
     private val remote = RemoteDataSource(EtaService.getService())
 
     fun getEta(eta: Eta): Observable<EtaResponse> {
-        return remote.getEta(eta.origin.getLatLng(), eta.destination.getLatLng())
+        return remote.getEta(eta.origin!!.name, eta.destination!!.name)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
     }

@@ -82,6 +82,7 @@ dependencies {
 
     // Support
     compile "com.google.android.support:wearable:$supportWearable"
+    compile "com.google.android.gms:play-services-location:$playServices"
     compile "com.google.android.gms:play-services-wearable:$playServices"
 
     // Rx

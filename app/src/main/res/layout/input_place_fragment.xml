@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.wearable.view.BoxInsetLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="15dp"
+    tools:ignore="RtlHardcoded,ContentDescription">
+
+    <!--<FrameLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:padding="5dp"-->
+        <!--app:layout_box="all">-->
+
+    <!--</FrameLayout>-->
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="5dp"
+        app:layout_box="all">
+
+        <TextView
+            android:id="@+id/confirmTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            tools:text="It's correct?\nAdress one two"/>
+
+        <!-- android.support.wearable.view.CircularButton -->
+
+        <ImageView
+            android:id="@+id/confirmBtn"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="bottom|left"
+            android:clickable="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_check"/>
+
+        <ImageView
+            android:id="@+id/cancelBtn"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="bottom|right"
+            android:clickable="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_cancel"/>
+
+    </FrameLayout>
+
+
+</android.support.wearable.view.BoxInsetLayout>
