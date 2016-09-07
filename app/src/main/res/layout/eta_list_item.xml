@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pl.kitek.eta.common.view.WearableListItemLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:gravity="center_vertical">
+
+    <ImageView
+        android:id="@+id/circleView"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/app_name"/>
+
+    <TextView
+        android:id="@+id/nameView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginRight="16dp"
+        android:fontFamily="sans-serif-condensed-light"
+        android:gravity="center_vertical|left"
+        android:lineSpacingExtra="-4sp"
+        android:textColor="@color/primary_text"
+        android:textSize="16sp"
+        tools:ignore="RtlHardcoded"
+        tools:text="@string/new_eta"/>
+
+</pl.kitek.eta.common.view.WearableListItemLayout>

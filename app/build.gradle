@@ -1,0 +1,87 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+buildscript {
+    repositories {
+        jcenter()
+        maven { url 'https://maven.fabric.io/public' }
+        maven { url "https://jitpack.io" }
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+
+    }
+    dependencies {
+        classpath "com.getkeepsafe.dexcount:dexcount-gradle-plugin:$dexCountVersion"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath "org.jetbrains.kotlin:kotlin-android-extensions:$kotlinVersion"
+        classpath "io.fabric.tools:gradle:$fabricIoVersion"
+    }
+}
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        applicationId "pl.kitek.eta"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        resConfigs "en", "pl"
+    }
+    signingConfigs {
+        release {
+            Properties props = new Properties()
+            props.load(new FileInputStream(file("../signing/signing.properties")))
+
+            storeFile file(props['keystore.keystore'])
+            storePassword props['keystore.password']
+            keyAlias props['keystore.alias']
+            keyPassword props['keystore.password']
+        }
+    }
+    buildTypes {
+        release {
+            debuggable false
+            minifyEnabled true
+            shrinkResources true
+
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+            testCoverageEnabled = false
+
+            ext.enableCrashlytics = true
+        }
+        debug {
+            debuggable true
+            minifyEnabled false
+            applicationIdSuffix ".debug"
+            testCoverageEnabled = false
+            ext.enableCrashlytics = false
+        }
+    }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    // Support
+    compile "com.google.android.support:wearable:$supportWearable"
+    compile "com.google.android.gms:play-services-wearable:$playServices"
+
+    // Libs
+    compile "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
+    compile "com.squareup.retrofit2:adapter-rxjava:$rootProject.retrofitVersion"
+
+    // Debug
+    compile "com.jakewharton.timber:timber:$rootProject.timberVersion"
+
+}
+repositories {
+    mavenCentral()
+}
