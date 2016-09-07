@@ -97,6 +97,10 @@ class InputPlaceFragment : Fragment(), DelayedConfirmationView.DelayedConfirmati
     }
 
     private fun onButtonClicked(id: Int) {
+        if (!isAdded) return
+        confirmBtn.reset()
+        cancelBtn.reset()
+
         when (id) {
             R.id.cancelBtn -> displaySpeechRecognizer()
             R.id.confirmBtn -> {

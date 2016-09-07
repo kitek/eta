@@ -14,5 +14,6 @@ class EtaResponse(
     class Value(val text: String, val value: Int)
 
     fun getTime(): String = rows[0].elements[0].duration.text
+    fun getDistance() = rows[0].elements[0].distance.text
 
 }

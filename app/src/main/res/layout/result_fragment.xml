@@ -14,15 +14,34 @@
         android:gravity="center"
         app:layout_box="all"/>
 
-    <TextView
-        android:id="@+id/etaTextView"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/etaLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:textSize="24sp"
+        android:orientation="vertical"
         android:visibility="gone"
         app:layout_box="all"
-        tools:text="3h 48min"/>
+        tools:visibility="visible">
+
+        <TextView
+            android:id="@+id/etaTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="20sp"
+            tools:text="3 hours 48 mins"/>
+
+        <TextView
+            android:id="@+id/distanceTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="20sp"
+            tools:text="56 km"/>
+
+    </LinearLayout>
+
 
 </android.support.wearable.view.BoxInsetLayout>

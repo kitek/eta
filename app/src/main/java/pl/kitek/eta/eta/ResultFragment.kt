@@ -53,11 +53,9 @@ class ResultFragment : Fragment() {
         }
 
         repo.getEta(eta!!).subscribe({
-            Timber.d("onNEXT: ${it.getTime()}")
             showResult(it)
         }, {
             showError("Error :(")
-
             Timber.d("onError: ${it.message}")
         }).addTo(subscriptions)
     }
@@ -70,13 +68,16 @@ class ResultFragment : Fragment() {
     fun showError(message: String) {
         etaProgressBar.visibility = View.GONE
         etaTextView.text = message
-        etaTextView.visibility = View.VISIBLE
+        distanceTextView.visibility = View.GONE
+        etaLayout.visibility = View.VISIBLE
     }
 
     fun showResult(result: EtaResponse) {
         etaProgressBar.visibility = View.GONE
         etaTextView.text = result.getTime()
-        etaTextView.visibility = View.VISIBLE
+        distanceTextView.text = result.getDistance()
+        distanceTextView.visibility = View.VISIBLE
+        etaLayout.visibility = View.VISIBLE
     }
 
 }
