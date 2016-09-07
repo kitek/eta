@@ -5,6 +5,7 @@ import android.support.wearable.activity.WearableActivity
 import pl.kitek.eta.R
 import pl.kitek.eta.common.data.model.Eta
 import pl.kitek.eta.common.data.model.ListItem
+import pl.kitek.eta.common.data.source.DataRepository
 import timber.log.Timber
 
 class EtaActivity : WearableActivity() {
@@ -21,32 +22,13 @@ class EtaActivity : WearableActivity() {
         val item = intent.getParcelableExtra<ListItem>(KEY_ETA)
         Timber.d("item: $item")
 
-        val URL = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=%s&destinations=%s&key=%s"
-        val KEY = "AIzaSyA90EpRcMuGtCWlkRCug8TPHv5bINgM90s"
+        val repo = DataRepository()
+        repo.getEta(item as Eta).subscribe({
+            Timber.d("onNEXT: ${it.getTime()}")
 
-        if (item is Eta) {
-
-//            val client = OkHttpClient()
-//            val request = Request
-//                    .Builder()
-//                    .url(URL.format(item.origin.getLatLng(), item.destination.getLatLng(), KEY))
-//                    .build()
-//            client.newCall(request).enqueue(object : Callback {
-//                override fun onFailure(call: Call?, e: IOException?) {
-//                    Timber.d("SAD, failure")
-//                }
-//
-//                override fun onResponse(call: Call?, response: Response) {
-//                    if (!response.isSuccessful) return
-//
-//                    Timber.d("** SUCCESS **")
-//                    Timber.d("response: ${response.body().string()}")
-//                }
-//
-//            })
-
-        }
-
+        }, {
+            Timber.d("onError :P")
+        })
 
     }
 

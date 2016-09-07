@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.eta_list_item.view.*
 import pl.kitek.eta.R
 import pl.kitek.eta.common.data.model.Eta
-import pl.kitek.eta.common.data.model.ListItemNew
 import pl.kitek.eta.common.data.model.ListItem
+import pl.kitek.eta.common.data.model.ListItemNew
 import pl.kitek.eta.common.data.model.Location
 import java.util.*
 

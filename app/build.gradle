@@ -50,8 +50,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
             testCoverageEnabled = false
-
             ext.enableCrashlytics = true
+
+            Properties props = new Properties()
+            props.load(new FileInputStream(file("../signing/signing.properties")))
+            buildConfigField "String", "API_ENDPOINT_URL", '"https://maps.googleapis.com/maps/api/distancematrix/"'
+            buildConfigField "String", "API_ENDPOINT_KEY", props['service.key']
         }
         debug {
             debuggable true
@@ -59,6 +63,11 @@ android {
             applicationIdSuffix ".debug"
             testCoverageEnabled = false
             ext.enableCrashlytics = false
+
+            Properties props = new Properties()
+            props.load(new FileInputStream(file("../signing/signing.properties")))
+            buildConfigField "String", "API_ENDPOINT_URL", '"https://maps.googleapis.com/maps/api/distancematrix/"'
+            buildConfigField "String", "API_ENDPOINT_KEY", props['service.key']
         }
     }
     sourceSets {
@@ -70,12 +79,18 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+
     // Support
     compile "com.google.android.support:wearable:$supportWearable"
     compile "com.google.android.gms:play-services-wearable:$playServices"
 
-    // Libs
+    // Rx
+    compile "io.reactivex:rxandroid:$rootProject.rxAndroidVersion"
+    compile "io.reactivex:rxjava:$rootProject.rxJavaVersion"
+
+    // HTTP Client
     compile "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
+    compile "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
     compile "com.squareup.retrofit2:adapter-rxjava:$rootProject.retrofitVersion"
 
     // Debug
